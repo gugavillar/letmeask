@@ -1,0 +1,33 @@
+.noquestions-content {
+  width: 100%;
+  .noquestions-img {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 15% auto 0;
+    width: 35%;
+  }
+
+  .noquestions-text {
+    text-align: center;
+    margin-top: 16px;
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-family: "Poppins";
+      line-height: 27px;
+      font-weight: 600;
+      color: #29292e;
+    }
+
+    p {
+      font-family: "Roboto";
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 21px;
+      color: #737380;
+    }
+  }
+}
