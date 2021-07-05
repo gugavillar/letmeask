@@ -3,7 +3,8 @@ import { firebase, auth } from '../services/firebase';
 
 type AuthContextType = {
     user: User | undefined,
-    signInWithGoogle: () => Promise<void>
+    signInWithGoogle: () => Promise<void>,
+    logoutSystem: () => Promise<void>
 }
 
 type User = {
@@ -56,8 +57,15 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
             });
         }
     }
+
+    async function logoutSystem() {
+        if (user) {
+            const teste = await auth.signOut();
+            console.log(teste);
+        }
+    }
     return (
-        <AuthContext.Provider value={{ user, signInWithGoogle }}>
+        <AuthContext.Provider value={{ user, signInWithGoogle, logoutSystem }}>
             {props.children}
         </AuthContext.Provider>
     );

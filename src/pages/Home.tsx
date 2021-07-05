@@ -25,6 +25,10 @@ export function Home() {
         history.push('/rooms/new');
     }
 
+    async function handleListRooms() {
+        history.push('/rooms/list');
+    }
+
     async function handleJoinRoom(event: FormEvent) {
         event.preventDefault();
         if (roomCode.trim() === '') {
@@ -57,6 +61,7 @@ export function Home() {
                         <img src={googleIconImg} alt="Logo do Google" />
                         Crie sua sala com o Google
                     </button>
+                    <Button onClick={handleListRooms}>Listar Salas</Button>
                     <div className="separator">ou entre em uma sala</div>
                     <form onSubmit={handleJoinRoom}>
                         <input
