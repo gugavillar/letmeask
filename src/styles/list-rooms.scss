@@ -18,10 +18,16 @@
     }
   }
   footer {
-    div.user-info {
+    div {
       button.admin-button {
         background: #ea4335;
       }
+    }
+  }
+
+  .noquestions-content {
+    .noquestions-img {
+      margin: 0;
     }
   }
 }

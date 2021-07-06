@@ -2,6 +2,7 @@ import illustrationImg from '../assets/images/illustration.svg';
 import '../styles/list-rooms.scss';
 import { useList } from '../hooks/useList';
 import { RoomsList } from '../components/RoomsList';
+import { NoQuestions } from '../components/NoQuestions';
 
 export function ListRooms() {
     const { rooms } = useList();
@@ -14,9 +15,12 @@ export function ListRooms() {
             </aside>
             <main>
                 <div className="list-rooms">
-                    {rooms.map(room =>
-                        !room.endedAt && <RoomsList key={room.id} id={room.id} title={room.title}></RoomsList>
-                    )}
+                    {rooms.length > 0 ? rooms.map(room =>
+                        <RoomsList key={room.id} id={room.id} authorId={room.authorId} title={room.title} endedRoom={room.endedAt}></RoomsList>
+                    )
+                        :
+                        <NoQuestions text="Crie um sala e envie o código desta sala para seus amigos e comece a respoder perguntas!" title="Nenhuma sala por aqui..."></NoQuestions>
+                    }
                 </div>
             </main>
         </div>

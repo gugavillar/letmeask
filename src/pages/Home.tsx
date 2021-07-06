@@ -16,7 +16,7 @@ import '../styles/auth.scss';
 
 export function Home() {
     const history = useHistory();
-    const { user, signInWithGoogle } = useAuth();
+    const { user, signInWithGoogle, logoutSystem } = useAuth();
     const [roomCode, setRoomCode] = useState('');
     async function handleCreateRoom() {
         if (!user) {
@@ -47,6 +47,9 @@ export function Home() {
         }
         history.push(`/rooms/${roomCode}`);
     }
+    async function handleLogout() {
+        await logoutSystem();
+    }
     return (
         <div id="page-auth">
             <aside>
@@ -62,6 +65,7 @@ export function Home() {
                         Crie sua sala com o Google
                     </button>
                     <Button onClick={handleListRooms}>Listar Salas</Button>
+                    {user?.id && <Button onClick={handleLogout}>Sair do sistema</Button>}
                     <div className="separator">ou entre em uma sala</div>
                     <form onSubmit={handleJoinRoom}>
                         <input

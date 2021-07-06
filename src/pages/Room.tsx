@@ -116,7 +116,7 @@ export function Room() {
                             </Question>
                         )
                     }) : (
-                        <NoQuestions text="Faça o seu login e seja a primeira pessoa a fazer uma pergunta!" />
+                        <NoQuestions title="Nenhuma pergunta por aqui..." text="Faça o seu login e seja a primeira pessoa a fazer uma pergunta!" />
                     )}
                 </div>
             </main>

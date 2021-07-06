@@ -60,8 +60,9 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
     async function logoutSystem() {
         if (user) {
-            const teste = await auth.signOut();
-            console.log(teste);
+            await auth.signOut();
+            setUser(undefined);
+
         }
     }
     return (

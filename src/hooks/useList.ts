@@ -19,7 +19,7 @@ export function useList() {
 
     useEffect(() => {
         const roomRef = database.ref(`rooms`);
-        roomRef.on('value', room => {
+        roomRef.once('value', room => {
             const firebaseRooms: FirebaseRooms = room.val() ?? {};
             const parsedRooms = Object.entries(firebaseRooms).map(([key, value]) => {
                 return {
@@ -35,7 +35,7 @@ export function useList() {
         return () => {
             roomRef.off('value');
         }
-    }, []);
+    }, [rooms]);
 
     return { rooms };
 }

@@ -5,13 +5,17 @@ import classnames from 'classnames';
 
 type RoomProps = {
     id: string,
-    title: string
+    title: string,
+    authorId: string,
+    endedRoom?: boolean
 }
 
 
 export function RoomsList({
     id,
     title,
+    authorId,
+    endedRoom
 }: RoomProps) {
     const history = useHistory();
     const { user } = useAuth();
@@ -25,11 +29,15 @@ export function RoomsList({
         <div>
             <h3>{title}</h3>
             <footer>
-                <div className="user-info">
-                    {user?.id === id ?
-                        <Button onClick={() => goRoom(id)}>Entrar na sala</Button>
+                <div>
+                    {endedRoom ?
+                        <Button disabled>Sala encerrada</Button>
                         :
-                        <Button className={classnames('button', { 'admin-button': true })} onClick={() => goAdminRoom(id)}>Administrar sala</Button>
+                        user?.id === authorId ?
+                            <Button className={classnames('button', { 'admin-button': true })} onClick={() => goAdminRoom(id)}>Administrar sala</Button>
+                            :
+                            <Button onClick={() => goRoom(id)}>Entrar na sala</Button>
+
                     }
                 </div>
             </footer>

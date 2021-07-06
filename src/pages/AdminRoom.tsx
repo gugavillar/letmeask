@@ -103,7 +103,7 @@ export function AdminRoom() {
                             </Question>
                         )
                     }) : (
-                        <NoQuestions text="Envie o código desta sala para seus amigos e comece a respoder perguntas!" />
+                        <NoQuestions title="Nenhuma pergunta por aqui..." text="Envie o código desta sala para seus amigos e comece a respoder perguntas!" />
                     )}
                 </div>
             </main>
