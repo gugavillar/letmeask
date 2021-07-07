@@ -35,7 +35,7 @@ export function useList() {
         return () => {
             roomRef.off('value');
         }
-    }, [rooms]);
+    }, []);
 
     return { rooms };
 }

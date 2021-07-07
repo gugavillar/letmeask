@@ -1,5 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { FormEvent, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
@@ -18,6 +20,9 @@ export function Home() {
     const history = useHistory();
     const { user, signInWithGoogle, logoutSystem } = useAuth();
     const [roomCode, setRoomCode] = useState('');
+    const notify = (text: string) => toast.success(text, {
+        autoClose: 3000
+    });
     async function handleCreateRoom() {
         if (!user) {
             await signInWithGoogle();
@@ -31,24 +36,32 @@ export function Home() {
 
     async function handleJoinRoom(event: FormEvent) {
         event.preventDefault();
+        const roomRef = await database.ref(`rooms/${roomCode}`).get();
+        const error = (text: string) => toast.error(text, {
+            autoClose: 3000
+        });
+        const success = () => toast.success('Entering in room', {
+            autoClose: 3000,
+            onClose: () => history.push(`/rooms/${roomCode}`)
+        });
         if (roomCode.trim() === '') {
             return;
         }
 
-        const roomRef = await database.ref(`rooms/${roomCode}`).get();
-
         if (!roomRef.exists()) {
-            alert('Room does not exists');
+            error('Room does not exists');
             return;
         }
         if (roomRef.val().endedAt) {
-            alert('Room alreday closed');
+            error('Room is already closed')
             return;
         }
-        history.push(`/rooms/${roomCode}`);
+        success();
     }
     async function handleLogout() {
+        notify('Logout system');
         await logoutSystem();
+
     }
     return (
         <div id="page-auth">
@@ -80,6 +93,7 @@ export function Home() {
                     </form>
                 </div>
             </main>
+            <ToastContainer />
         </div>
     )
 }

@@ -6,11 +6,12 @@ import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
 import '../styles/auth.scss';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function NewRoom() {
     const { user } = useAuth();
     const history = useHistory();
-
     const [newRoom, setNewRoom] = useState('');
     async function handleCreateRoom(event: FormEvent) {
         event.preventDefault();
@@ -22,7 +23,11 @@ export function NewRoom() {
             title: newRoom,
             authorId: user?.id
         });
-        history.push(`/admin/rooms/${firebaseRoom.key}`);
+        const notify = () => toast.success('Enter in room', {
+            autoClose: 3000,
+            onClose: () => history.push(`/admin/rooms/${firebaseRoom.key}`)
+        });
+        notify();
     }
     return (
         <div id="page-auth">
@@ -47,10 +52,11 @@ export function NewRoom() {
                         </Button>
                     </form>
                     <p>
-                        Quer entrar em uma sala existente? <Link to="/">clique aqui</Link>
+                        Quer entrar em uma sala existente? <Link to="/rooms/list">clique aqui</Link>
                     </p>
                 </div>
             </main>
+            <ToastContainer />
         </div>
     )
 }
