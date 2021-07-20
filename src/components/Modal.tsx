@@ -7,7 +7,7 @@ interface ModalProps {
     children: ReactNode
 }
 
-
+ReactModal.setAppElement('#root');
 export function Modal({ isOpen, onRequestClose, children }: ModalProps) {
     return (
         <ReactModal overlayClassName="react-overlay-modal" className="react-content-modal" isOpen={isOpen} onRequestClose={onRequestClose}>
