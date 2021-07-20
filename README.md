@@ -2,4 +2,4 @@
 
 ## Projeto da NLW da trilha React
 
-![tela_de_inicio](/assets/screenshots/inicio.png)
+![tela_de_inicio](/src/assets/screenshots/inicio.png)
