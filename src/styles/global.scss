@@ -1,19 +1,80 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
 }
 
 body {
-  background: #f8f8f8;
-  color: #29292e;
+   background: #f8f8f8;
+   color: #29292e;
 }
 
 body,
 input,
 button,
 textarea {
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
+   font-family: "Roboto", sans-serif;
+   font-size: 16px;
+   font-weight: 400;
+}
+
+.react-overlay-modal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(0, 0, 0, 0.5);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.react-content-modal {
+   position: relative;
+   background-color: #f8f8f8;
+   width: 100%;
+   max-width: 590px;
+   padding: 64px 100px;
+   border-radius: 8px;
+
+   .title-modal {
+      text-align: center;
+
+      img {
+         margin-bottom: 24px;
+         width: 48px;
+         height: 48px;
+      }
+      h2 {
+         margin-bottom: 12px;
+         font-family: "Poppins", sans-serif;
+         font-weight: 700;
+         font-size: 24px;
+         line-height: 34px;
+         color: #29292e;
+      }
+      p {
+         font-family: "Roboto", sans-serif;
+         font-weight: 400;
+         font-size: 16px;
+         line-height: 26px;
+         color: #737380;
+      }
+   }
+   .buttons-modal {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+
+      button:first-child {
+         background: #dbdcdd;
+         color: #737380;
+      }
+      button {
+         background: #e73f5d;
+      }
+   }
 }

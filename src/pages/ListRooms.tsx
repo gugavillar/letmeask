@@ -1,6 +1,4 @@
-import illustrationImg from '../assets/images/illustration.svg';
 import '../styles/list-rooms.scss';
-import { useList } from '../hooks/useList';
 import { NoQuestions } from '../components/NoQuestions';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -8,15 +6,48 @@ import { Button } from '../components/Button';
 import classnames from 'classnames';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Aside } from '../components/Aside';
+import { useEffect, useState } from 'react';
+import { database } from '../services/firebase';
+
+type RoomType = {
+    id: string,
+    authorId: string,
+    title: string,
+    endedAt?: boolean
+}
+
+type FirebaseRooms = Record<string, {
+    authorId: string,
+    title: string,
+    endedAt?: boolean
+}>
 
 export function ListRooms() {
-    const { rooms } = useList();
+    const [rooms, setRooms] = useState<RoomType[]>([]);
+
+    useEffect(() => {
+        const roomRef = database.ref(`rooms`);
+        roomRef.once('value', room => {
+            const firebaseRooms: FirebaseRooms = room.val() ?? {};
+            const parsedRooms = Object.entries(firebaseRooms).map(([key, value]) => {
+                return {
+                    id: key,
+                    authorId: value.authorId,
+                    title: value.title,
+                    endedAt: value.endedAt ? true : false
+                }
+            });
+            setRooms(parsedRooms);
+        });
+    }, []);
     const history = useHistory();
     const { user } = useAuth();
     const notify = (link: string) => toast.success('Enter in room', {
-        autoClose: 3000,
+        autoClose: 1500,
         onClose: () => history.push(link)
     });
+
     function goRoom(roomId: string) {
         const link = `/rooms/${roomId}`;
         notify(link);
@@ -27,11 +58,7 @@ export function ListRooms() {
     }
     return (
         <div id="page-auth">
-            <aside>
-                <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
-                <strong>Toda pergunta tem uma resposta</strong>
-                <p>Aprenda e compartilhe conhecimento com outras pessoas</p>
-            </aside>
+            <Aside />
             <main>
                 <div className="list-rooms">
                     {rooms.length > 0 ? rooms.map(room =>

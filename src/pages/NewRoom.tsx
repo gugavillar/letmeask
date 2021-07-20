@@ -24,7 +24,7 @@ export function NewRoom() {
             authorId: user?.id
         });
         const notify = () => toast.success('Enter in room', {
-            autoClose: 3000,
+            autoClose: 1500,
             onClose: () => history.push(`/admin/rooms/${firebaseRoom.key}`)
         });
         notify();

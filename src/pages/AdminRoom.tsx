@@ -13,6 +13,10 @@ import { useRoom } from '../hooks/useRoom';
 import '../styles/room.scss';
 import { database } from '../services/firebase';
 
+import { ModalDeleteQuestion } from '../components/ModalDeleteQuestion';
+import { ModalEndRoom } from '../components/ModalEndRoom';
+import { useState } from 'react';
+
 type RoomParams = {
     id: string
 }
@@ -23,6 +27,28 @@ export function AdminRoom() {
     const params = useParams<RoomParams>();
     const roomId = params.id;
     const { title, questions } = useRoom(roomId);
+    const [isModalDeleteOpen, setModalDeleteOpen] = useState(false);
+    const [questionDelete, setQuestionDelete] = useState('');
+    const [isModalEndOpen, setModalEndOpen] = useState(false);
+    const [roomIdEnd, setRoomIdEnd] = useState('');
+
+    function handleOpenDeleteModal(questionId: string) {
+        setModalDeleteOpen(true);
+        setQuestionDelete(questionId);
+    }
+
+    function handleCloseDeleteModal() {
+        setModalDeleteOpen(false);
+    }
+
+    function handleOpenEndRoomModal(roomId: string) {
+        setModalEndOpen(true);
+        setRoomIdEnd(roomId);
+    }
+
+    function handleCloseEndRoomModal() {
+        setModalEndOpen(false);
+    }
 
     async function handleEndRoom() {
         await database.ref(`rooms/${roomId}`).update({
@@ -32,9 +58,8 @@ export function AdminRoom() {
     }
 
     async function handleDeleteQuestion(questionId: string) {
-        if (window.confirm('Tem certeza que você deseja excluir essa pergunta?')) {
-            await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
-        }
+        await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+        setModalDeleteOpen(false);
     }
 
     async function handleCheckQuestionAsAnswered(questionId: string) {
@@ -61,7 +86,7 @@ export function AdminRoom() {
                     <img src={logoImg} alt="Letmeask" onClick={goHome} />
                     <div>
                         <RoomCode code={roomId} />
-                        <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
+                        <Button isOutlined onClick={() => handleOpenEndRoomModal(roomId)}>Encerrar sala</Button>
                     </div>
                 </div>
             </header>
@@ -97,7 +122,7 @@ export function AdminRoom() {
                                 )}
                                 <button
                                     type="button"
-                                    onClick={() => handleDeleteQuestion(question.id)}>
+                                    onClick={() => handleOpenDeleteModal(question.id)}>
                                     <img src={deleteImg} alt="Remover pergunta" />
                                 </button>
                             </Question>
@@ -107,6 +132,8 @@ export function AdminRoom() {
                     )}
                 </div>
             </main>
+            <ModalDeleteQuestion isOpen={isModalDeleteOpen} onRequestClose={handleCloseDeleteModal} onDeleteQuestion={handleDeleteQuestion} questionId={questionDelete}></ModalDeleteQuestion>
+            <ModalEndRoom isOpen={isModalEndOpen} onRequestClose={handleCloseEndRoomModal} onCloseRoom={handleEndRoom} roomId={roomIdEnd}></ModalEndRoom>
         </div>
     )
 }

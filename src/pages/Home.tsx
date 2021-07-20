@@ -2,8 +2,6 @@ import { useHistory } from 'react-router-dom';
 import { FormEvent, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
@@ -14,6 +12,7 @@ import { useAuth } from '../hooks/useAuth';
 
 
 import '../styles/auth.scss';
+import { Aside } from '../components/Aside';
 
 
 export function Home() {
@@ -38,10 +37,10 @@ export function Home() {
         event.preventDefault();
         const roomRef = await database.ref(`rooms/${roomCode}`).get();
         const error = (text: string) => toast.error(text, {
-            autoClose: 3000
+            autoClose: 1500
         });
         const success = () => toast.success('Entering in room', {
-            autoClose: 3000,
+            autoClose: 1500,
             onClose: () => history.push(`/rooms/${roomCode}`)
         });
         if (roomCode.trim() === '') {
@@ -65,11 +64,7 @@ export function Home() {
     }
     return (
         <div id="page-auth">
-            <aside>
-                <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
-                <strong>Toda pergunta tem uma resposta</strong>
-                <p>Aprenda e compartilhe conhecimento com outras pessoas</p>
-            </aside>
+            <Aside />
             <main>
                 <div className="main-content">
                     <img src={logoImg} alt="Letmeask" />
