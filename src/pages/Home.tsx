@@ -20,7 +20,7 @@ export function Home() {
     const { user, signInWithGoogle, logoutSystem } = useAuth();
     const [roomCode, setRoomCode] = useState('');
     const notify = (text: string) => toast.success(text, {
-        autoClose: 3000
+        autoClose: 1500
     });
     async function handleCreateRoom() {
         if (!user) {
