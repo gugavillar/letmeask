@@ -15,8 +15,8 @@
 ## Como executar
 
 ```
-$ git clone https://github.com/gugavillar/react
-$ cd react
+$ git clone https://github.com/gugavillar/letmeask
+$ cd letmeask
 ```
 
 Para iniciá-lo, siga os passos abaixo:
